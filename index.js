@@ -2,7 +2,9 @@ const express = require('express')
 const { connectDB } = require('./src/connection')
 const { getPrices, getPairs } = require('./src/services/getPrices')
 const app = express()
+const cors = require('cors')
 
+app.use(cors())
 require('dotenv').config()
 const port = process.env.PORT || 3000
 
@@ -13,7 +15,7 @@ connectDB()
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Server is UP and running')
 })
 
 app.get('/prices', async (req, res) => {
