@@ -27,6 +27,31 @@ app.get('/prices', async (req, res) => {
 app.get('/prices/:market', async (req, res) => {
     const data = await getPrices();
 
+    const mostUsedCryptocurrencies = [
+        "btc",
+        "eth",
+        "xrp",
+        "bch",
+        "ltc",
+        "eos",
+        "trx",
+        "xlm",
+        "neo",
+        "ada",
+        "iota",
+        "xmr",
+        "dash",
+        "etc",
+        "btg",
+        "zec",
+        "waves",
+        "omg",
+        "zrx",
+        "kcs",
+        "gnt",
+        "snt",
+        "btm"
+    ]
 
     if (data?.data?.cursor?.hasMore) {
         console.log(data?.data?.cursor)
@@ -56,12 +81,14 @@ app.get('/prices/:market', async (req, res) => {
 
     pairs.forEach(pair => {
 
-        if (objectTransformedPrices.hasOwnProperty(pair.symbol)) {
+        if (mostUsedCryptocurrencies.includes(pair?.base?.symbol) && objectTransformedPrices.hasOwnProperty(pair.symbol)) {
             const price = objectTransformedPrices[pair.symbol]
-            response[ pair.id]={
+            response[pair.id] = {
                 price,
                 base: pair.base.symbol,
-                quote: pair.quote.symbol
+                baseName: pair.base.name,
+                quote: pair.quote.symbol,
+                quoteName: pair.quote.name,
             }
 
 
