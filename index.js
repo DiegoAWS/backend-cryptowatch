@@ -40,17 +40,17 @@ app.get('/prices/:market', async (req, res) => {
         "ada",
         "iota",
         "xmr",
-        "dash",
         "etc",
-        "btg",
         "zec",
         "waves",
         "omg",
-        "zrx",
         "kcs",
-        "gnt",
-        "snt",
-        "btm"
+        "btm",
+        "mkr",
+        "gto",
+        "gsn",
+        "bat",
+        "knc",
     ]
 
     if (data?.data?.cursor?.hasMore) {
