@@ -46,7 +46,6 @@ app.get('/prices/:market', async (req, res) => {
         "omg",
         "kcs",
         "btm",
-        "mkr",
         "gto",
         "gsn",
         "bat",
