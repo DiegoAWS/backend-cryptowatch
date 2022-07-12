@@ -27,22 +27,48 @@ app.get('/prices', async (req, res) => {
 app.get('/prices/:market', async (req, res) => {
     const data = await getPrices();
 
-    const size = await Pairs.countDocuments();
 
-    console.log({ size })
-
-    if (data?.data?.cursor) {
+    if (data?.data?.cursor?.hasMore) {
         console.log(data?.data?.cursor)
     }
 
-    const response = Object.entries(data?.data?.result || {})
+    const transformedPrices = Object.entries(data?.data?.result || {})
         ?.filter(([index, value]) => index.startsWith(`market:${req.params.market}:`))
         ?.map(([index, value]) => ({
-            market: index.split(':')[1],
             pair: index.split(':')[2],
             price: value
-
         }));
+
+    const objectTransformedPrices = transformedPrices?.reduce((acc, curr) => {
+        acc[curr.pair] = curr.price;
+        return acc;
+    }, {})
+
+    let response = {};
+
+    const pairsUsed = transformedPrices?.map(({ pair }) => pair)
+
+    const pairs = await Pairs.find({
+        symbol: {
+            $in: pairsUsed
+        }
+    }).lean()
+
+    pairs.forEach(pair => {
+
+        if (objectTransformedPrices.hasOwnProperty(pair.symbol)) {
+            const price = objectTransformedPrices[pair.symbol]
+            response[ pair.id]={
+                price,
+                base: pair.base.symbol,
+                quote: pair.quote.symbol
+            }
+
+
+        }
+    })
+
+
 
     res.send(response || 'Error fetching the data')
 
