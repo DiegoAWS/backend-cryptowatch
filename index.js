@@ -27,30 +27,30 @@ app.get('/prices', async (req, res) => {
 app.get('/prices/:market', async (req, res) => {
     const data = await getPrices();
 
-    const mostUsedCryptocurrencies = [
-        "btc",
-        "eth",
-        "xrp",
-        "bch",
-        "ltc",
-        "eos",
-        "trx",
-        "xlm",
-        "neo",
-        "ada",
-        "iota",
-        "xmr",
-        "etc",
-        "zec",
-        "waves",
-        "omg",
-        "kcs",
-        "btm",
-        "gto",
-        "gsn",
-        "bat",
-        "knc",
-    ]
+    // const mostUsedCryptocurrencies = [
+    //     "btc",
+    //     "eth",
+    //     "xrp",
+    //     "bch",
+    //     "ltc",
+    //     "eos",
+    //     "trx",
+    //     "xlm",
+    //     "neo",
+    //     "ada",
+    //     "iota",
+    //     "xmr",
+    //     "etc",
+    //     "zec",
+    //     "waves",
+    //     "omg",
+    //     "kcs",
+    //     "btm",
+    //     "gto",
+    //     "gsn",
+    //     "bat",
+    //     "knc",
+    // ]
 
     if (data?.data?.cursor?.hasMore) {
         console.log(data?.data?.cursor)
@@ -80,7 +80,9 @@ app.get('/prices/:market', async (req, res) => {
 
     pairs.forEach(pair => {
 
-        if (mostUsedCryptocurrencies.includes(pair?.base?.symbol) && objectTransformedPrices.hasOwnProperty(pair.symbol)) {
+        if (
+            // mostUsedCryptocurrencies.includes(pair?.base?.symbol) && 
+        objectTransformedPrices.hasOwnProperty(pair.symbol)) {
             const price = objectTransformedPrices[pair.symbol]
             response[pair.id] = {
                 price,
