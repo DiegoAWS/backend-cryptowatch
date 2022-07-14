@@ -3,6 +3,7 @@ const { connectDB } = require('./src/connection')
 const { getPrices, getPairs } = require('./src/services/getPrices')
 const app = express()
 const cors = require('cors')
+var path = require('path');
 
 app.use(cors())
 require('dotenv').config()
@@ -13,6 +14,7 @@ const { Pairs } = require('./src/models/Pair')
 
 connectDB()
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.send('Server is UP and running')
