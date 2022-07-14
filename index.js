@@ -51,12 +51,19 @@ app.get('/prices/:market', async (req, res) => {
         symbol: {
             $in: pairsUsed
         }
-    }).sort({'base.baseName':1}).lean()
+    }).sort({ 'base.baseName': 1 }).lean()
+
+    // const mostUsedCryptocurrencies = [
+    //     "btc",
+    //     "dash",
+    //     "neo",
+    //     "eth"
+    // ];
 
     pairs.forEach(pair => {
 
         if (
-            // mostUsedCryptocurrencies.includes(pair?.base?.symbol) && 
+            // mostUsedCryptocurrencies.includes(pair?.base?.symbol) &&
             objectTransformedPrices.hasOwnProperty(pair.symbol)) {
             const price = objectTransformedPrices[pair.symbol]
             response[pair.id] = {
